@@ -10,27 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MagshiTriviaWPFClient
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RegisterWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RegisterWindow : Window
     {
-        private RegisterWindow registerWindow;
-        public MainWindow()
+        private MainWindow mainWindow;
+        public RegisterWindow()
         {
             InitializeComponent();
         }
-        public void MoveToRegister(object sender, RoutedEventArgs e)
+        public void MoveToLogin(object sender, RoutedEventArgs e)
         {
-            this.registerWindow = new RegisterWindow();
-            this.registerWindow.Show();
+            
+            mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
-
     }
 }

@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MagshiTriviaWPFClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="500"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+        <StackPanel>
+            <materialDesign:ColorZone Grid.RowSpan="2" Grid.Row="0" Mode="PrimaryMid">
+                <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
+            </materialDesign:ColorZone>
+        <TextBlock Text="Login" FontSize="20" Margin="8"></TextBlock>
+            <Grid HorizontalAlignment="Center" Margin="0 72 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+            <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300" x:Name="box" Margin="0 0 0 10" Grid.ColumnSpan="2"></TextBox>
+            <PasswordBox Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Password" Margin="0 0 0 10" Grid.ColumnSpan="2"></PasswordBox>
+            <Button Grid.Row="3" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2">Login</Button>
+            <TextBlock Text="Don't Have An Account?" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
+            <TextBlock x:Name="signUpBtn" Text="Sign Up." Grid.Row="4" Grid.Column="1" Margin="7 0 0 0" Foreground="Orange" FontWeight="Bold" />
+            <Button Grid.Row="4" Grid.Column="2" Width="61" Height="15" HorizontalAlignment="Left" Opacity="0" Click="MoveToRegister"></Button>
+        </Grid>
+    </StackPanel>
 </Window>

@@ -16,7 +16,7 @@ namespace MagshiTriviaWPFClient
         public Socket clientSock = null;  
         public byte[] buffer = null;  
     }
-    class SockClient
+    public class SockClient
     {
         private Socket clientSock;
         private ManualResetEvent receiveDone; 
@@ -31,6 +31,11 @@ namespace MagshiTriviaWPFClient
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+        ~SockClient()
+        {
+            clientSock.Shutdown(SocketShutdown.Both);
+            clientSock.Close();
         }
         private void ConnectCallBack(IAsyncResult AR)
         {
@@ -98,6 +103,15 @@ namespace MagshiTriviaWPFClient
                 MessageBox.Show(ex.ToString());
             }
             receiveDone.Set();
+        }
+        public void Register(RegisterRequest request)
+        {
+            this.Send(SerializeRequest.SerializeRegister(request));
+        }
+        public ushort Login(LoginRequest request)
+        {
+            this.Send(SerializeRequest.SerializeLogin(request));
+            return SerializationAndDeserialization.DeserializeResponse.DeserializeLogin(this.Receive()).status;
         }
     }
 }

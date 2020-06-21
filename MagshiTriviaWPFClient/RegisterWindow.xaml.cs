@@ -19,17 +19,30 @@ namespace MagshiTriviaWPFClient
     /// </summary>
     public partial class RegisterWindow : Window
     {
+        public Button registerButton = null;
+        public TextBox userBox = null, emailTextBox = null ;
+        public PasswordBox passBox = null;
         private MainWindow mainWindow;
-        public RegisterWindow()
+        private SockClient client = null;
+        public RegisterWindow(SockClient client)
         {
             InitializeComponent();
+            this.registerBtn = (Button)this.FindName("registerBtn");
+            this.userBox = (TextBox)this.FindName("usernameBox");
+            this.passBox = (PasswordBox)this.FindName("passwordBox");
+            this.emailTextBox = (TextBox)this.FindName("emailBox");
+            this.client = client;
         }
         public void MoveToLogin(object sender, RoutedEventArgs e)
         {
             
-            mainWindow = new MainWindow();
+            mainWindow = new MainWindow(this.client);
             mainWindow.Show();
             this.Close();
+        }
+        public void OnRegister(object sender, RoutedEventArgs e)
+        {
+            client.Register(new RegisterRequest(this.userBox.Text, this.emailTextBox.Text, this.passBox.Password));
         }
     }
 }

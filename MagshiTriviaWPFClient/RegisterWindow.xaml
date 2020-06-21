@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MagshiTriviaWPFClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="500"
+        Title="Register Window" Height="600" Width="500"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -33,7 +33,7 @@
             <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300" x:Name="usernameBox" Margin="0 0 0 10" Grid.ColumnSpan="2"></TextBox>
             <TextBox Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Email" MinWidth="300" x:Name="emailBox" Margin="0 0 0 10" Grid.ColumnSpan="2"></TextBox>
             <PasswordBox Grid.Row="3" Grid.Column="0" materialDesign:HintAssist.Hint="Password" x:Name="passwordBox" Margin="0 0 0 10" Grid.ColumnSpan="2"></PasswordBox>
-            <Button Grid.Row="4" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2" x:Name="registerBtn">Register</Button>
+            <Button Grid.Row="4" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2" x:Name="registerBtn" Click="OnRegister">Register</Button>
             <TextBlock Text="Already Have An Account?" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
             <TextBlock Text="Login." Grid.Row="5" Grid.Column="1" Margin="22 0 0 0" Foreground="Orange" FontWeight="Bold"></TextBlock>
             <Button Grid.Row="5" Grid.Column="2" Width="40" Opacity="0" Margin="20 0 0 0" Height="15" HorizontalAlignment="Left" Click="MoveToLogin"></Button>

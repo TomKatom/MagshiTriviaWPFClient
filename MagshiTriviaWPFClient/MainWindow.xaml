@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MagshiTriviaWPFClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="500"
+        Title="Login Window" Height="600" Width="500"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:validation="clr-namespace:MagshiTriviaWPFClient.ValidationRules"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -17,7 +18,7 @@
                 <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
             </materialDesign:ColorZone>
         <TextBlock Text="Login" FontSize="20" Margin="8"></TextBlock>
-            <Grid HorizontalAlignment="Center" Margin="0 72 0 0">
+            <Grid HorizontalAlignment="Center" Margin="0 80 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -28,13 +29,30 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-            <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300" x:Name="box" Margin="0 0 0 10" Grid.ColumnSpan="2"></TextBox>
-            <PasswordBox Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Password" Margin="0 0 0 10" Grid.ColumnSpan="2"></PasswordBox>
-            <Button Grid.Row="3" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2">Login</Button>
-            <TextBlock Text="Don't Have An Account?" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
-            <TextBlock x:Name="signUpBtn" Text="Sign Up." Grid.Row="4" Grid.Column="1" Margin="7 0 0 0" Foreground="Orange" FontWeight="Bold" />
-            <Button Grid.Row="4" Grid.Column="2" Width="61" Height="15" HorizontalAlignment="Left" Opacity="0" Click="MoveToRegister"></Button>
+            <Border x:Name="border" BorderThickness="1" Grid.ColumnSpan="2" Margin="0 0 0 10" BorderBrush="DarkRed" Visibility="Hidden" >
+                <TextBlock Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="17">
+                    <TextBlock.Background>
+                        <SolidColorBrush Color="PaleVioletRed" Opacity="0.3"/>
+                    </TextBlock.Background> 
+                    Invalid Username/Password. 
+                </TextBlock>
+            </Border>
+            <TextBox x:Name="username" Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300"  Margin="0 0 0 10" Grid.ColumnSpan="2">
+                <TextBox.Text>
+                    <Binding Path="." UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validation:NotEmptyValidationRule Message="A username is required"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <PasswordBox x:Name="password" Grid.Row="3" Grid.Column="0" materialDesign:HintAssist.Hint="Password" Margin="0 0 0 10" Grid.ColumnSpan="2"></PasswordBox>
+            <Button Grid.Row="4" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2" Click="OnClickLogin">Login</Button>
+            <TextBlock Text="Don't Have An Account?" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
+            <TextBlock x:Name="signUpBtn" Text="Sign Up." Grid.Row="5" Grid.Column="1" Margin="7 0 0 0" Foreground="Orange" FontWeight="Bold" />
+            <Button Grid.Row="5" Grid.Column="2" Width="61" Height="15" HorizontalAlignment="Left" Opacity="0" Click="MoveToRegister"></Button>
         </Grid>
     </StackPanel>
 </Window>

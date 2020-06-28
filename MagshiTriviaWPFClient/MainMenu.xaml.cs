@@ -19,19 +19,35 @@ namespace MagshiTriviaWPFClient
     /// </summary>
     public partial class MainMenu : Window
     {
-        public MainMenu()
+        private SockClient client = null;
+        private ContextMenu cm = null;
+        public MainMenu(SockClient client)
         {
             InitializeComponent();
+            this.client = client;
+        }
+        private void OnClickCreateRoom(object sender, RoutedEventArgs e)
+        {
+            new CreateRoomWindow(this.client).Show();
+            this.Close();
         }
         public void OnClickStatistics(object sender, RoutedEventArgs e)
         {
-            ContextMenu cm = this.FindResource("cmStatistics") as ContextMenu;
+            cm = this.FindResource("cmStatistics") as ContextMenu;
             cm.PlacementTarget = sender as Button;
             cm.IsOpen = true;
         }
 
         public void OnClickExit(object sender, RoutedEventArgs e)
         {
+            cm.IsOpen = false;
+            this.Close();
+        }
+
+        private void OnClickPersonal(object sender, RoutedEventArgs e)
+        {
+            cm.IsOpen = false;
+            new PersonalStatistics(this.client).Show();
             this.Close();
         }
     }

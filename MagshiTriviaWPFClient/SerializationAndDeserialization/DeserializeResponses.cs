@@ -7,14 +7,14 @@ using Newtonsoft.Json;
 
 namespace MagshiTriviaWPFClient.SerializationAndDeserialization
 {
-    public static class DeserializeResponse
+    public static class DeserializeResponses
     {
-        public static LoginResponse DeserializeLogin(byte[] data)
+        public static T DeserializeResponse<T>(byte[] data)
         {
            
             int dataLength = ((data[1] << 8 | data[2]) << 8 | data[3]) << 8 | data[4];
             string jsonData = Encoding.ASCII.GetString(data, 5, dataLength);
-            LoginResponse result = JsonConvert.DeserializeObject<LoginResponse>(jsonData);
+            T result = JsonConvert.DeserializeObject<T>(jsonData);
             return result;
         }
     }

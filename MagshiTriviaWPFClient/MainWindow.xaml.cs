@@ -41,13 +41,13 @@ namespace MagshiTriviaWPFClient
             usernameBox = (TextBox)this.FindName("username");
             passwordBox = (PasswordBox)this.FindName("password");
             errorBox = (Border)this.FindName("border");
-            if(this.client.Login(new LoginRequest(usernameBox.Text, passwordBox.Password)) == 1)
+            if(this.client.Login(new LoginRequest(usernameBox.Text, passwordBox.Password)) != ResponseStatus.loginSuccess)
             {
                 errorBox.Visibility = Visibility.Visible;
             }
             else
             {
-                menuWindow = new MainMenu();
+                menuWindow = new MainMenu(this.client);
                 menuWindow.Show();
                 this.Close();
             }

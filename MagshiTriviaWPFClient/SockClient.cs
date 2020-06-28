@@ -106,12 +106,22 @@ namespace MagshiTriviaWPFClient
         }
         public void Register(RegisterRequest request)
         {
-            this.Send(SerializeRequest.SerializeRegister(request));
+            this.Send(SerializeRequests.SerializeRegister(request));
         }
-        public ushort Login(LoginRequest request)
+        public ResponseStatus Login(LoginRequest request)
         {
-            this.Send(SerializeRequest.SerializeLogin(request));
-            return SerializationAndDeserialization.DeserializeResponse.DeserializeLogin(this.Receive()).status;
+            this.Send(SerializeRequests.SerializeLogin(request));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+        }
+        public ResponseStatus CreateRoom(CreateRoomRequest request)
+        {
+            this.Send(SerializeRequests.SerializeRequest<CreateRoomRequest>(request, 22));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+        }
+        public StatisticsResponse GetStatistics()
+        {
+            this.Send(SerializeRequests.SerializeStatistics());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<StatisticsResponse>(this.Receive());
         }
     }
 }

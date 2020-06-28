@@ -1,4 +1,4 @@
-﻿<Window x:Class="MagshiTriviaWPFClient.MainMenu"
+﻿<Window x:Class="MagshiTriviaWPFClient.CreateRoomWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,25 +12,19 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}">
-    <Window.Resources>
-        <ContextMenu x:Key="cmStatistics">
-            <MenuItem Header="Personal Statistics" Click="OnClickPersonal" />
-            <Separator />
-            <MenuItem Header="Global Leaderboards"  />
-        </ContextMenu>
-    </Window.Resources>
     <DockPanel>
         <materialDesign:ColorZone Grid.RowSpan="2" Grid.Row="0" Mode="PrimaryMid" DockPanel.Dock="Top">
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
         </materialDesign:ColorZone>
 
-        <TextBlock Text="Main Menu" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
+        <TextBlock Text="Create Room" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
         <Border Padding="100">
             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <Button Click="OnClickCreateRoom" Margin="0 0 0 8">Create Room</Button>
-                <Button Margin="0 0 0 8">Join Room</Button>
-                <Button Margin="0 0 0 8" Click="OnClickStatistics">Statistics</Button>
-                <Button Margin="0 0 0 8" Click="OnClickExit">Exit</Button> 
+                <TextBox x:Name="RoomName" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Room Name"></TextBox>
+                <TextBox x:Name="MaxPlayers" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Number Of Players"></TextBox>
+                <TextBox x:Name="QuestionCount" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Number Of Questions"></TextBox>
+                <TextBox x:Name="AnswerTimeout" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Time For Question"></TextBox>
+                <Button Margin="0 0 0 8" Click="OnClickCreate">Create Room</Button>
             </StackPanel>
         </Border>
     </DockPanel>

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace MagshiTriviaWPFClient
 {
-    static class SerializeRequest
+    static class SerializeRequests
     {
         public static byte[] SerializeRegister(RegisterRequest request)
         {
@@ -40,6 +40,33 @@ namespace MagshiTriviaWPFClient
             for(int i = 5, j = 0; i < serialized.Length; i++, j++)
             {
                 serialized[i] = ASCIIEncoding.ASCII.GetBytes(data)[j];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeRequest<T>(T request, ushort code)
+        {
+            string data = JsonConvert.SerializeObject(request);
+            uint dataLength = (uint)data.Length;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes(code)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            for (int i = 5, j = 0; i < serialized.Length; i++, j++)
+            {
+                serialized[i] = ASCIIEncoding.ASCII.GetBytes(data)[j];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeStatistics()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.getStatisticsRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
             }
             return serialized;
         }

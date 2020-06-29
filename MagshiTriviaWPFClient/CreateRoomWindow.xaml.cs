@@ -32,13 +32,18 @@ namespace MagshiTriviaWPFClient
             TextBox maxPlayers = (TextBox)this.FindName("MaxPlayers");
             TextBox questionCount = (TextBox)this.FindName("QuestionCount");
             TextBox answerTimeout = (TextBox)this.FindName("AnswerTimeout");
-            if(this.client.CreateRoom(new CreateRoomRequest(roomName.Text, int.Parse(MaxPlayers.Text), int.Parse(questionCount.Text), double.Parse(answerTimeout.Text))) != ResponseStatus.createRoomSuccess)
+            if(this.client.CreateRoom(new CreateRoomRequest(roomName.Text, int.Parse(MaxPlayers.Text), int.Parse(questionCount.Text), int.Parse(answerTimeout.Text))) != ResponseStatus.createRoomSuccess) // fix their shitty design
             {
                 MessageBox.Show("Cannot Create Room.");
             }
             else
             {
-                // Move to room info window
+                new RoomInfo(this.client, true, 1, int.Parse(answerTimeout.Text), int.Parse(questionCount.Text), int.Parse(maxPlayers.Text), roomName.Text).Show();
+                if(this.client.JoinRoom(new JoinRoomRequest(1)) != ResponseStatus.joinRoomSuccess)
+                {
+                    MessageBox.Show("Error Joining Room");
+                }
+                this.Close();
             }
         }
     }

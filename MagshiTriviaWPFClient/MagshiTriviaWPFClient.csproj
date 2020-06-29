@@ -72,8 +72,14 @@
     <Compile Include="CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JoinRoom.xaml.cs">
+      <DependentUpon>JoinRoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PersonalStatistics.xaml.cs">
       <DependentUpon>PersonalStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RoomInfo.xaml.cs">
+      <DependentUpon>RoomInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="SerializationAndDeserialization\DeserializeResponses.cs" />
     <Compile Include="MainMenu.xaml.cs">
@@ -88,6 +94,10 @@
     <Compile Include="SockClient.cs" />
     <Compile Include="NotEmptyValidationRule.cs" />
     <Page Include="CreateRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JoinRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoomInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

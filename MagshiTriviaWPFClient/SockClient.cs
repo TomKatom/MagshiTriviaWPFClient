@@ -115,7 +115,7 @@ namespace MagshiTriviaWPFClient
         }
         public ResponseStatus CreateRoom(CreateRoomRequest request)
         {
-            this.Send(SerializeRequests.SerializeRequest<CreateRoomRequest>(request, 22));
+            this.Send(SerializeRequests.SerializeRequest<CreateRoomRequest>(request, RequestCodes.createRoomRequest));
             return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
         }
         public StatisticsResponse GetStatistics()
@@ -123,5 +123,21 @@ namespace MagshiTriviaWPFClient
             this.Send(SerializeRequests.SerializeStatistics());
             return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<StatisticsResponse>(this.Receive());
         }
+        public GetRoomsResponse GetRooms()
+        {
+            this.Send(SerializeRequests.SerializeGetRooms());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetRoomsResponse>(this.Receive());
+        }
+        public GetPlayersResponse GetPlayers(GetPlayersRequest request)
+        {
+            this.Send(SerializeRequests.SerializeRequest<GetPlayersRequest>(request, RequestCodes.getPlayersInRoomRequest));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetPlayersResponse>(this.Receive());
+        }
+        public ResponseStatus JoinRoom(JoinRoomRequest request)
+        {
+            this.Send(SerializeRequests.SerializeRequest<JoinRoomRequest>(request, RequestCodes.joinRoomRequest));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+        }
+
     }
 }

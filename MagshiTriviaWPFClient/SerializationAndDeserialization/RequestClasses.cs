@@ -40,7 +40,7 @@
     }
     public class CreateRoomRequest
     {
-        public CreateRoomRequest(string roomName, int numberOfPlayers, int numberOfQuestions, double timePerQuestion)
+        public CreateRoomRequest(string roomName, int numberOfPlayers, int numberOfQuestions, int timePerQuestion)
         {
             this.roomName = roomName;
             this.maxUsers = numberOfPlayers;
@@ -50,7 +50,7 @@
         public string roomName { get; set; }
         public int maxUsers { get; set; }
         public int questionCount { get; set; }
-        public double answerTimeout { get; set; }
+        public int answerTimeout { get; set; }
     }
     public class StatisticsRequest
     {
@@ -60,5 +60,21 @@
         }
 
         public int status { get; set; }
+    }
+    public class GetPlayersRequest
+    {
+        public GetPlayersRequest(int roomId)
+        {
+            this.roomId = roomId;
+        }
+        public int roomId { get; set; }
+    }
+    public class JoinRoomRequest
+    {
+        public JoinRoomRequest(int roomId)
+        {
+            this.roomId = roomId;
+        }
+        public int roomId { get; set; }
     }
 }

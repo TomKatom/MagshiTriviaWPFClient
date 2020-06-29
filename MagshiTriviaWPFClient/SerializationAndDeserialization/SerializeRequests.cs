@@ -43,12 +43,12 @@ namespace MagshiTriviaWPFClient
             }
             return serialized;
         }
-        public static byte[] SerializeRequest<T>(T request, ushort code)
+        public static byte[] SerializeRequest<T>(T request, RequestCodes code)
         {
             string data = JsonConvert.SerializeObject(request);
             uint dataLength = (uint)data.Length;
             byte[] serialized = new byte[1 + 4 + dataLength];
-            serialized[0] = BitConverter.GetBytes(code)[0];
+            serialized[0] = BitConverter.GetBytes((ushort)code)[0];
             for (int i = 1; i < 5; i++)
             {
                 serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
@@ -64,6 +64,17 @@ namespace MagshiTriviaWPFClient
             uint dataLength = (uint)0;
             byte[] serialized = new byte[1 + 4 + dataLength];
             serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.getStatisticsRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeGetRooms()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.getRoomsRequest)[0];
             for (int i = 1; i < 5; i++)
             {
                 serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];

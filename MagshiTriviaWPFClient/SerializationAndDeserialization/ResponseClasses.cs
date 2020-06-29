@@ -40,10 +40,27 @@ namespace MagshiTriviaWPFClient
             this.numOfCorrectAnswers = numOfCorrectAnswers;
             this.averageTimeForAnswer = averageTimeForAnswer;
         }
-
         public int numOfPlayerGames { get; set; }
         public int numOfTotalAnswers { get; set; }
         public int numOfCorrectAnswers { get; set; }
         public double averageTimeForAnswer { get; set; }
+    }
+    public class GetRoomsResponse : Response
+    {
+        public GetRoomsResponse(ResponseStatus status, Room[] rooms) : base(status)
+        {
+            Rooms = rooms;
+        }
+        public Room[] Rooms { get; set; }
+    }
+    public class GetPlayersResponse : Response
+    {
+        public GetPlayersResponse(ResponseStatus status, string[] players) : base(status)
+        {
+            this.players = players;
+        }
+
+        public string[] players { get; set; }
+
     }
 }

@@ -50,5 +50,11 @@ namespace MagshiTriviaWPFClient
             new PersonalStatistics(this.client).Show();
             this.Close();
         }
+
+        private void OnClickJoinRoom(object sender, RoutedEventArgs e)
+        {
+            new JoinRoom(client).Show();
+            this.Close();
+        }
     }
 }

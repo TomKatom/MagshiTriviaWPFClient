@@ -20,7 +20,17 @@ namespace MagshiTriviaWPFClient
         joinRoomSuccess,
         joinRoomError,
         createRoomSuccess,
-        createRoomError
+        createRoomError,
+        closeRoomSuccess,
+        closeRoomError,
+        startGameSuccess,
+        startGameError,
+        getRoomStateSuccess,
+        getRoomStateError,
+        leaveRoomSuccess,
+        leaveRoomError,
+        roomClosed,
+        gameStarted
     };
 
     public class Response
@@ -61,6 +71,28 @@ namespace MagshiTriviaWPFClient
         }
 
         public string[] players { get; set; }
+
+    }
+    public class GetRoomStateResponse : Response
+    {
+        public GetRoomStateResponse(ResponseStatus status, bool hasGameBegun, string[] players, int questionCount, int answerTimeout, int maxPlayers, string name, int id) : base(status)
+        {
+            this.hasGameBegun = hasGameBegun;
+            this.players = players;
+            this.questionCount = questionCount;
+            this.answerTimeout = answerTimeout;
+            this.maxPlayers = maxPlayers;
+            this.name = name;
+            this.id = id;
+        }
+
+        public bool hasGameBegun { get; set; }
+        public string[] players { get; set; }
+        public int questionCount { get; set; }
+        public int answerTimeout { get; set; }
+        public int maxPlayers { get; set; }
+        public string name { get; set; }
+        public int id { get; set; }
 
     }
 }

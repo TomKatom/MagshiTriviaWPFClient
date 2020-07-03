@@ -39,15 +39,7 @@
                     Invalid Username/Password. 
                 </TextBlock>
             </Border>
-            <TextBox x:Name="username" Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300"  Margin="0 0 0 10" Grid.ColumnSpan="2">
-                <TextBox.Text>
-                    <Binding Path="." UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validation:NotEmptyValidationRule Message="A username is required"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <TextBox x:Name="username" Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Username" MinWidth="300"  Margin="0 0 0 10" Grid.ColumnSpan="2"></TextBox>
             <PasswordBox x:Name="password" Grid.Row="3" Grid.Column="0" materialDesign:HintAssist.Hint="Password" Margin="0 0 0 10" Grid.ColumnSpan="2"></PasswordBox>
             <Button Grid.Row="4" Grid.Column="0" Margin="0 0 0 10" Grid.ColumnSpan="2" Click="OnClickLogin">Login</Button>
             <TextBlock Text="Don't Have An Account?" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>

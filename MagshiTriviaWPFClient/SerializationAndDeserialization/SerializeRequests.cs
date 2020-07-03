@@ -81,5 +81,60 @@ namespace MagshiTriviaWPFClient
             }
             return serialized;
         }
+        public static byte[] SerializeLogout()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.logoutRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeGetRoomState()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.getRoomStateRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeLeaveRoom()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.leaveRoomRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeCloseRoom()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.closeRoomRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
+        public static byte[] SerializeStartGame()
+        {
+            uint dataLength = (uint)0;
+            byte[] serialized = new byte[1 + 4 + dataLength];
+            serialized[0] = BitConverter.GetBytes((ushort)RequestCodes.startGameRequest)[0];
+            for (int i = 1; i < 5; i++)
+            {
+                serialized[i] = BitConverter.GetBytes(dataLength)[i - 1];
+            }
+            return serialized;
+        }
     }
 }

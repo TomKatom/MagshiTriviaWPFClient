@@ -25,6 +25,7 @@ namespace MagshiTriviaWPFClient
         {
             InitializeComponent();
             this.client = client;
+            cm = this.FindResource("cmStatistics") as ContextMenu;
         }
         private void OnClickCreateRoom(object sender, RoutedEventArgs e)
         {
@@ -33,7 +34,6 @@ namespace MagshiTriviaWPFClient
         }
         public void OnClickStatistics(object sender, RoutedEventArgs e)
         {
-            cm = this.FindResource("cmStatistics") as ContextMenu;
             cm.PlacementTarget = sender as Button;
             cm.IsOpen = true;
         }

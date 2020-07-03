@@ -11,7 +11,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="{materialDesign:MaterialDesignFont}">
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        x:Name="this">
     <DockPanel>
         <materialDesign:ColorZone Grid.RowSpan="2" Grid.Row="0" Mode="PrimaryMid" DockPanel.Dock="Top">
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
@@ -52,9 +53,9 @@
                         </Border>
                     </StackPanel>
                 </Border>
-                <Button x:Name="LeaveButton" Margin="0 7 0 0">Leave Room</Button>
-                <Button x:Name="CloseButton" Margin="0 7 0 0">Close Room</Button>
-                <Button x:Name="StartButton" Margin="0 7 0 0">Start Game</Button>
+                <Button x:Name="LeaveButton" Click="OnClickLeave" Margin="0 7 0 0">Leave Room</Button>
+                <Button x:Name="CloseButton" Click="OnClickClose" Margin="0 7 0 0">Close Room</Button>
+                <Button x:Name="StartButton" Click="OnClickStart"  Margin="0 7 0 0">Start Game</Button>
             </StackPanel>
         </Border>
     </DockPanel>

@@ -21,22 +21,33 @@
             <TextBlock Text="Join Room" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
             <Border Padding="100">
                 <StackPanel>
+                    <Border x:Name="border" BorderThickness="1" Grid.ColumnSpan="2" Margin="0 0 0 5" BorderBrush="DarkRed" Visibility="Hidden" HorizontalAlignment="Stretch" >
+                        <TextBlock x:Name="ErrTxt" Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="18">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="PaleVioletRed" Opacity="0.3"/>
+                            </TextBlock.Background>
+                            You Must Pick A Room.
+                        </TextBlock>
+                    </Border>
                     <TextBlock Text="Rooms:" FontSize="18"></TextBlock>
-                <Border BorderThickness="2" BorderBrush="Black">
-                    <ListBox x:Name="RoomList" VerticalContentAlignment="Stretch">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <WrapPanel>
-                                <TextBlock Text="{Binding RoomName}"></TextBlock> 
-                                <TextBlock Text="{Binding PlayerCount}"></TextBlock> 
-                                <TextBlock Text="\"></TextBlock> 
-                                <TextBlock Text="{Binding MaxPlayers}"></TextBlock> 
-                                </WrapPanel>
-                            </DataTemplate> 
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Border>
-                <Button Click="OnClickJoin">Join Selected</Button>
+                    <Border BorderThickness="2" BorderBrush="Black" Padding="10">
+                        <StackPanel>
+                            <ListBox x:Name="RoomList" VerticalContentAlignment="Stretch">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                        <TextBlock Text="{Binding RoomName}"></TextBlock> 
+                                        <TextBlock Text="{Binding PlayerCount}"></TextBlock> 
+                                        <TextBlock Text="\"></TextBlock> 
+                                        <TextBlock Text="{Binding MaxPlayers}"></TextBlock> 
+                                        </WrapPanel>
+                                    </DataTemplate> 
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        <TextBlock x:Name="EmptyTxt" FontSize="16" Text="No Rooms Available." Visibility="Hidden"></TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Button Click="OnClickJoin" Margin="0 10 0 0">Join Selected</Button>
                 </StackPanel>
             </Border>
         </DockPanel>

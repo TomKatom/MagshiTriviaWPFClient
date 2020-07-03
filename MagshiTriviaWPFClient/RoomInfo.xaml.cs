@@ -24,12 +24,41 @@ namespace MagshiTriviaWPFClient
         private Button closeButton = null, startButton = null, leaveButton = null;
         private ListBox participantList = null;
         private TextBlock maxTxt = null, timeText = null, numTxt = null, nameTxt = null;
+        private Window thisWindow = null;
+
+        private void OnClickLeave(object sender, RoutedEventArgs e)
+        {
+            this.client.LeaveRoom();
+            new MainMenu(this.client).Show();
+            participantUpdate.CancelAsync();
+            this.Close();
+
+        }
+
+        private void OnClickClose(object sender, RoutedEventArgs e)
+        {
+            this.client.CloseRoom();
+            new MainMenu(this.client).Show();
+            participantUpdate.CancelAsync();
+            this.Close();
+        }
+
+        private void OnClickStart(object sender, RoutedEventArgs e)
+        {
+            this.client.StartGame();
+            MessageBox.Show("Game Started.");
+            participantUpdate.CancelAsync();
+            this.Close();
+        }
+
         private List<Participant> participants = null;
         private int roomId;
-        public RoomInfo(SockClient client, bool isAdmin, int roomId, int timePerQuestion, int questionsCount, int maxPlayers, string name)
+        private BackgroundWorker participantUpdate = null;
+        public RoomInfo(SockClient client, bool isAdmin)
         {
             InitializeComponent();
             this.client = client;
+            this.thisWindow = (Window)this.FindName("this");
             this.closeButton = (Button)this.FindName("CloseButton");
             this.startButton = (Button)this.FindName("StartButton");
             this.leaveButton = (Button)this.FindName("LeaveButton");
@@ -38,30 +67,34 @@ namespace MagshiTriviaWPFClient
             this.timeText = (TextBlock)this.FindName("TimeTxt");
             this.numTxt = (TextBlock)this.FindName("NumTxt");
             this.nameTxt = (TextBlock)this.FindName("NameTxt");
-            this.numTxt.Text = questionsCount.ToString();
-            this.maxTxt.Text = maxPlayers.ToString();
-            this.timeText.Text = timePerQuestion.ToString();
-            this.nameTxt.Text = name;
-            this.roomId = roomId;
+            GetRoomStateResponse state = this.client.GetRoomState();
+            this.numTxt.Text = state.questionCount.ToString();
+            this.maxTxt.Text = state.maxPlayers.ToString();
+            this.timeText.Text = state.answerTimeout.ToString();
+            this.nameTxt.Text = state.name;
+            this.roomId = state.id;
             if (isAdmin)
             {
                 closeButton.Visibility = Visibility.Visible;
                 startButton.Visibility = Visibility.Visible;
                 leaveButton.Visibility = Visibility.Hidden;
+                leaveButton.IsEnabled = false;
             }
             else
             {
                 closeButton.Visibility = Visibility.Hidden;
+                closeButton.IsEnabled = false;
                 startButton.Visibility = Visibility.Hidden;
+                startButton.IsEnabled = false;
                 leaveButton.Visibility = Visibility.Visible;
             }
             this.participants = new List<Participant>();
-            foreach (var player in this.client.GetPlayers(new GetPlayersRequest(roomId)).players)
+            foreach (var player in this.client.GetRoomState().players)
             {
                 participants.Add(new Participant(player));
             }
             this.participantList.ItemsSource = participants;
-            BackgroundWorker participantUpdate = new BackgroundWorker
+            this.participantUpdate = new BackgroundWorker
             {
                 WorkerReportsProgress = true,
                 WorkerSupportsCancellation = true
@@ -73,18 +106,51 @@ namespace MagshiTriviaWPFClient
         {
             while (true)
             {
-                Thread.Sleep(3000);
-                this.participants.Clear();
-                foreach (var player in this.client.GetPlayers(new GetPlayersRequest(roomId)).players)
+                if (participantUpdate.CancellationPending)
                 {
-                    participants.Add(new Participant(player));
+                    e.Cancel = true;
+                    return;
                 }
-                this.participantList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                Thread.Sleep(3000);
+                if (participantUpdate.CancellationPending)
                 {
-                    ParticipantList.ItemsSource = this.participants;
-                    ParticipantList.Items.Refresh(); 
-                }));
-
+                    e.Cancel = true;
+                    return;
+                }
+                if (!participantUpdate.CancellationPending)
+                {
+                    this.participants.Clear();
+                    GetRoomStateResponse resp = this.client.GetRoomState();
+                    if(resp.status == ResponseStatus.roomClosed)
+                    {
+                        MessageBox.Show("Room Closed.");
+                        this.thisWindow.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                        {
+                            new MainMenu(this.client).Show();
+                            this.Close();
+                        }));
+                        e.Cancel = true;
+                        return;
+                    }
+                    else if(resp.status == ResponseStatus.gameStarted)
+                    {
+                        MessageBox.Show("Game Started.");
+                        e.Cancel = true;
+                        return;
+                    }
+                    else
+                    {
+                        foreach (var player in resp.players)
+                        {
+                            participants.Add(new Participant(player));
+                        }
+                        this.participantList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                        {
+                            ParticipantList.ItemsSource = this.participants;
+                            ParticipantList.Items.Refresh(); 
+                        }));
+                    }
+                }
             }
         }
 

@@ -24,13 +24,19 @@ namespace MagshiTriviaWPFClient
         ListBox roomList = null;
         BackgroundWorker roomUpdater = null;
         List<RoomData> roomLst = null;
+        private TextBlock empty = null;
         public JoinRoom(SockClient client)
         {
             InitializeComponent();
+            empty = (TextBlock)this.FindName("EmptyTxt");
             roomList = (ListBox)this.FindName("RoomList");
             this.client = client;
             Room[] rooms = this.client.GetRooms().Rooms;
             roomLst = new List<RoomData>();
+            if(rooms.Length < 1)
+            {
+                ((TextBlock)this.FindName("EmptyTxt")).Visibility = Visibility.Visible;
+            }
             for (int i = 0; i < rooms.Length; i++)
             {
                 int playersInRoom = this.client.GetPlayers(new GetPlayersRequest(rooms[i].id)).players.Length;
@@ -48,15 +54,30 @@ namespace MagshiTriviaWPFClient
 
         private void OnClickJoin(object sender, RoutedEventArgs e)
         {
-            int chosenRoomId = (roomList.SelectedItem as RoomData).id;
+            bool picked = true;
+            int chosenRoomId = 0;
+            try
+            {
+                chosenRoomId = (roomList.SelectedItem as RoomData).id;
+            }
+            catch
+            {
+                picked = false;
+                ((Border)this.FindName("border")).Visibility = Visibility.Visible;
+            }
+            if (picked)
+            {
+                ((Border)this.FindName("border")).Visibility = Visibility.Hidden;
+            }
             RoomData room = (RoomData)roomList.SelectedItem;
-            if(this.client.JoinRoom(new JoinRoomRequest(chosenRoomId)) != ResponseStatus.joinRoomSuccess)
+            if(picked && this.client.JoinRoom(new JoinRoomRequest(chosenRoomId)) != ResponseStatus.joinRoomSuccess)
             {
                 MessageBox.Show("Error Joining Room");
             }
-            else
+            else if(picked)
             {
-                new RoomInfo(this.client, false, chosenRoomId, room.timerPerQuestion, room.questionsCount, room.MaxPlayers, room.RoomName).Show();
+                new RoomInfo(this.client, false).Show();
+                this.roomUpdater.CancelAsync(); 
                 this.Close();
             }
         }
@@ -64,20 +85,51 @@ namespace MagshiTriviaWPFClient
         {
             while (true)
             {
-
-                Thread.Sleep(3000);
-                Room[] rooms = this.client.GetRooms().Rooms;
-                this.roomLst.Clear();
-                for (int i = 0; i < rooms.Length; i++)
+                if (roomUpdater.CancellationPending)
                 {
-                    int playersInRoom = this.client.GetPlayers(new GetPlayersRequest(rooms[i].id)).players.Length;
-                this.roomLst.Add(new RoomData(rooms[i].name + " ", playersInRoom, rooms[i].maxPlayers, rooms[i].id, rooms[i].timePerQuestion, rooms[i].questionsCount));
+                    e.Cancel = true;
+                    return;
                 }
-                this.roomList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                Thread.Sleep(3000);
+                if (roomUpdater.CancellationPending)
                 {
-                    RoomList.ItemsSource = this.roomLst;
-                    RoomList.Items.Refresh(); 
-                }));
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                {
+                    if (!roomUpdater.CancellationPending)
+                    {
+
+                        Room[] rooms = this.client.GetRooms().Rooms;
+                        if(rooms.Length < 1)
+                        {
+                            empty.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                            {
+                                EmptyTxt.Visibility = Visibility.Visible;
+                            }));
+                        }
+                        else
+                        {
+    
+                            empty.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                            {
+                                EmptyTxt.Visibility = Visibility.Hidden;
+                            }));
+                        }
+                        this.roomLst.Clear();
+                        for (int i = 0; i < rooms.Length; i++)
+                        {
+                            int playersInRoom = this.client.GetPlayers(new GetPlayersRequest(rooms[i].id)).players.Length;
+                        this.roomLst.Add(new RoomData(rooms[i].name + " ", playersInRoom, rooms[i].maxPlayers, rooms[i].id, rooms[i].timePerQuestion, rooms[i].questionsCount));
+                        }
+                        this.roomList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                        {
+                            RoomList.ItemsSource = this.roomLst;
+                            RoomList.Items.Refresh(); 
+                        }));
+                    }
+                }
             }
         }
     }

@@ -16,10 +16,16 @@
         <materialDesign:ColorZone Grid.RowSpan="2" Grid.Row="0" Mode="PrimaryMid" DockPanel.Dock="Top">
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
         </materialDesign:ColorZone>
-
         <TextBlock Text="Create Room" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
-        <Border Padding="100">
+        <Border Padding="100" HorizontalAlignment="Stretch" >
             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Border x:Name="border" BorderThickness="1" Grid.ColumnSpan="2" Margin="0 0 0 10" BorderBrush="DarkRed" Visibility="Hidden" HorizontalAlignment="Stretch" >
+                    <TextBlock x:Name="ErrTxt" Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="14">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="PaleVioletRed" Opacity="0.3"/>
+                        </TextBlock.Background> 
+                    </TextBlock>
+                </Border>
                 <TextBox x:Name="RoomName" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Room Name"></TextBox>
                 <TextBox x:Name="MaxPlayers" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Number Of Players"></TextBox>
                 <TextBox x:Name="QuestionCount" Margin="0 0 0 8" materialDesign:HintAssist.Hint="Number Of Questions"></TextBox>

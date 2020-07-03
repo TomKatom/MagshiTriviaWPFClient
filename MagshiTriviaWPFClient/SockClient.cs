@@ -34,6 +34,8 @@ namespace MagshiTriviaWPFClient
         }
         ~SockClient()
         {
+            this.Send(SerializeRequests.SerializeLogout());
+            this.Receive();
             clientSock.Shutdown(SocketShutdown.Both);
             clientSock.Close();
         }
@@ -137,6 +139,28 @@ namespace MagshiTriviaWPFClient
         {
             this.Send(SerializeRequests.SerializeRequest<JoinRoomRequest>(request, RequestCodes.joinRoomRequest));
             return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+        }
+        public GetRoomStateResponse GetRoomState()
+        {
+            this.Send(SerializeRequests.SerializeGetRoomState());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetRoomStateResponse>(this.Receive());
+        }
+        public ResponseStatus LeaveRoom()
+        {
+            this.Send(SerializeRequests.SerializeLeaveRoom());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+        }
+        public ResponseStatus CloseRoom()
+        {
+            this.Send(SerializeRequests.SerializeCloseRoom());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+
+        }
+        public ResponseStatus StartGame()
+        {
+            this.Send(SerializeRequests.SerializeStartGame());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
+
         }
 
     }

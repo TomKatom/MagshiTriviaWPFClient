@@ -16,7 +16,7 @@
         <ContextMenu x:Key="cmStatistics">
             <MenuItem Header="Personal Statistics" Click="OnClickPersonal" />
             <Separator />
-            <MenuItem Header="Global Leaderboards"  />
+            <MenuItem Header="Global Leaderboards" Click="OnClickLeaderboard"  />
         </ContextMenu>
     </Window.Resources>
     <DockPanel>

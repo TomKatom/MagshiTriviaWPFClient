@@ -1,6 +1,6 @@
 ﻿namespace MagshiTriviaWPFClient
 {
-    enum RequestCodes : ushort
+    public enum RequestCodes : ushort
     {
         loginRequestCode = 20,
         signupRequestCode,
@@ -8,12 +8,17 @@
         getRoomsRequest,
         getPlayersInRoomRequest,
         joinRoomRequest,
-        getStatisticsRequest,
+        getStatisticsRequest, 
+        getLeaderboardRequest,
         logoutRequest,
         closeRoomRequest,
         startGameRequest,
         getRoomStateRequest,
-        leaveRoomRequest
+        leaveRoomRequest,
+        leaveGameRequest,
+        getQuestionRequest,
+        submitAnswerRequest,
+        getGameResultRequest
     };
 
     public class RegisterRequest
@@ -76,5 +81,13 @@
             this.roomId = roomId;
         }
         public int roomId { get; set; }
+    }
+    public class SubmitAnswerRequest
+    {
+        public SubmitAnswerRequest(int answerId)
+        {
+            this.answerId = answerId;
+        }
+        public int answerId { get; set; }
     }
 }

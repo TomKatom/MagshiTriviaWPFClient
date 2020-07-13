@@ -32,7 +32,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
             <Border x:Name="border" BorderThickness="1" Grid.ColumnSpan="2" Margin="0 0 0 10" BorderBrush="DarkRed" Visibility="Hidden" >
-                <TextBlock Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="17">
+                <TextBlock x:Name="ErrMsg" Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="17">
                     <TextBlock.Background>
                         <SolidColorBrush Color="PaleVioletRed" Opacity="0.3"/>
                     </TextBlock.Background> 

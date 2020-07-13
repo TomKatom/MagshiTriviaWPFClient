@@ -17,7 +17,7 @@
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
         </materialDesign:ColorZone>
         <TextBlock Text="Create Room" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
-        <Border Padding="100" HorizontalAlignment="Stretch" >
+        <Border DockPanel.Dock="Top" Padding="100" HorizontalAlignment="Stretch" >
             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Border x:Name="border" BorderThickness="1" Grid.ColumnSpan="2" Margin="0 0 0 10" BorderBrush="DarkRed" Visibility="Hidden" HorizontalAlignment="Stretch" >
                     <TextBlock x:Name="ErrTxt" Padding="3" Foreground="DarkRed" Grid.ColumnSpan="2"  FontSize="14">
@@ -33,5 +33,6 @@
                 <Button Margin="0 0 0 8" Click="OnClickCreate">Create Room</Button>
             </StackPanel>
         </Border>
+        <Button Click="OnClickBack" DockPanel.Dock="Bottom">Back To Menu</Button>
     </DockPanel>
 </Window>

@@ -24,6 +24,7 @@ namespace MagshiTriviaWPFClient
         private MainMenu menuWindow;
         private SockClient client = null;
         private TextBox usernameBox = null;
+        private TextBlock errMsg = null;
         private PasswordBox passwordBox = null;
         private Border errorBox = null;
         public MainWindow()
@@ -41,15 +42,23 @@ namespace MagshiTriviaWPFClient
             usernameBox = (TextBox)this.FindName("username");
             passwordBox = (PasswordBox)this.FindName("password");
             errorBox = (Border)this.FindName("border");
-            if(this.client.Login(new LoginRequest(usernameBox.Text, passwordBox.Password)) != ResponseStatus.loginSuccess)
-            {
-                errorBox.Visibility = Visibility.Visible;
-            }
-            else
+            this.errMsg = (TextBlock)this.FindName("ErrMsg");
+            var res = this.client.Login(new LoginRequest(usernameBox.Text, passwordBox.Password));
+            if(res == ResponseStatus.loginSuccess)
             {
                 menuWindow = new MainMenu(this.client);
                 menuWindow.Show();
                 this.Close();
+            }
+            else if(res == ResponseStatus.loginError)
+            {
+                errMsg.Text = "Invalid Username / Password.";
+                errorBox.Visibility = Visibility.Visible;
+            }
+            else if(res  == ResponseStatus.alreadyLoggedIn)
+            {
+                errMsg.Text = "Account already logged in.";
+                errorBox.Visibility = Visibility.Visible;
             }
         }
         public void MoveToRegister(object sender, RoutedEventArgs e)

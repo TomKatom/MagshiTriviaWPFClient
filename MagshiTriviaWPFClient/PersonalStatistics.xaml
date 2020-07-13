@@ -18,7 +18,7 @@
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
         </materialDesign:ColorZone>
         <TextBlock Text="Personal Statistics" FontSize="20" Margin="8" DockPanel.Dock="Top"></TextBlock>
-        <Border Padding="100">
+        <Border Padding="100" DockPanel.Dock="Top">
             <StackPanel HorizontalAlignment="Stretch">
                 <WrapPanel Margin="0 0 0 8" >
                     <TextBlock FontSize="18" Text="Number Of Games: "/>
@@ -33,10 +33,11 @@
                     <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Path=totalAnswersCount}" />
                 </WrapPanel>
                 <WrapPanel Margin="0 0 0 8">
-                    <TextBlock FontSize="18" Text="Average Time For Answer:"/>
+                    <TextBlock FontSize="18" Text="Average Time For Answer: "/>
                     <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Path=averageTimeForAnswer}" />
                 </WrapPanel>
             </StackPanel>
         </Border>
+        <Button Click="OnClickBack" DockPanel.Dock="Bottom">Back To Menu</Button>
     </DockPanel>
 </Window>

@@ -89,5 +89,10 @@ namespace MagshiTriviaWPFClient
         }
         #endregion
 
+        private void OnClickBack(object sender, RoutedEventArgs e)
+        {
+            new MainMenu(this.client).Show();
+            this.Close();
+        }
     }
 }

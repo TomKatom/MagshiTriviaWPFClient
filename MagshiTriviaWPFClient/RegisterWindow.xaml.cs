@@ -22,7 +22,6 @@ namespace MagshiTriviaWPFClient
         public Button registerButton = null;
         public TextBox userBox = null, emailTextBox = null ;
         public PasswordBox passBox = null;
-        private MainWindow mainWindow;
         private SockClient client = null;
         public RegisterWindow(SockClient client)
         {
@@ -35,14 +34,21 @@ namespace MagshiTriviaWPFClient
         }
         public void MoveToLogin(object sender, RoutedEventArgs e)
         {
-            
-            mainWindow = new MainWindow(this.client);
-            mainWindow.Show();
+            new MainWindow(this.client).Show();
             this.Close();
         }
         public void OnRegister(object sender, RoutedEventArgs e)
         {
-            client.Register(new RegisterRequest(this.userBox.Text, this.emailTextBox.Text, this.passBox.Password));
+            if(client.Register(new RegisterRequest(this.userBox.Text, this.emailTextBox.Text, this.passBox.Password)) == ResponseStatus.signUpSuccess)
+            {
+                MessageBox.Show("Account Created Successfully.");
+                new MainWindow(this.client).Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error Creating Account.");
+            }
         }
     }
 }

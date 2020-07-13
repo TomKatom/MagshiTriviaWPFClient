@@ -11,6 +11,7 @@ namespace MagshiTriviaWPFClient
     {
         loginSuccess = 0,
         loginError,
+        alreadyLoggedIn,
         signUpSuccess,
         signUpError,
         logoutSuccess,
@@ -30,7 +31,16 @@ namespace MagshiTriviaWPFClient
         leaveRoomSuccess,
         leaveRoomError,
         roomClosed,
-        gameStarted
+        gameStarted,
+        leaveGameSuccess,
+        leaveGameError,
+        getQuestionSuccess,
+        getQuestionError,
+        submitAnswerSuccess,
+        submitAnswerError,
+        getGameResultSuccess,
+        getGameResultError,
+        gameHasNotEnded
     };
 
     public class Response
@@ -94,5 +104,42 @@ namespace MagshiTriviaWPFClient
         public string name { get; set; }
         public int id { get; set; }
 
+    }
+    public class GetQuestionResponse : Response
+    {
+        public GetQuestionResponse(string question, string[] answers, ResponseStatus status) : base(status)
+        {
+            this.question = question;
+            this.answers = answers;
+        }
+        public string question { get; set; }
+        public string[] answers { get; set; }
+
+    }
+    public class SubmitAnswerResponse : Response
+    {
+        public SubmitAnswerResponse(int correctAnswerId, ResponseStatus status) : base(status)
+        {
+            this.correctAnswerId = correctAnswerId;
+        }
+
+        public int correctAnswerId { get; set; }
+    }
+    public class GetGameResultsResponse : Response
+    {
+        public GetGameResultsResponse(PlayerResults[] results, ResponseStatus status) : base(status)
+        {
+            this.results = results;
+        }
+
+        public PlayerResults[] results{ get; set; }
+    }
+    public class GetLeaderboardResponse : Response
+    {
+        public GetLeaderboardResponse(LeaderboardEntry[] players, ResponseStatus status) : base(status)
+        {
+            this.players = players;
+        }
+        public LeaderboardEntry[] players { get; set; }
     }
 }

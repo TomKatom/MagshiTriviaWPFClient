@@ -46,8 +46,8 @@ namespace MagshiTriviaWPFClient
         private void OnClickStart(object sender, RoutedEventArgs e)
         {
             this.client.StartGame();
-            MessageBox.Show("Game Started.");
             participantUpdate.CancelAsync();
+            new Game(this.client, int.Parse(this.numTxt.Text), int.Parse(this.timeText.Text)).Show();
             this.Close();
         }
 
@@ -123,6 +123,7 @@ namespace MagshiTriviaWPFClient
                     GetRoomStateResponse resp = this.client.GetRoomState();
                     if(resp.status == ResponseStatus.roomClosed)
                     {
+                        this.participantUpdate.CancelAsync();
                         MessageBox.Show("Room Closed.");
                         this.thisWindow.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
                         {
@@ -130,25 +131,39 @@ namespace MagshiTriviaWPFClient
                             this.Close();
                         }));
                         e.Cancel = true;
-                        return;
+                        break;
                     }
                     else if(resp.status == ResponseStatus.gameStarted)
                     {
-                        MessageBox.Show("Game Started.");
+                        this.participantUpdate.CancelAsync();
+                        this.thisWindow.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                        { 
+                            new Game(this.client, int.Parse(this.numTxt.Text), int.Parse(this.timeText.Text)).Show();
+                            this.Close();
+                        }));
                         e.Cancel = true;
                         return;
                     }
                     else
                     {
-                        foreach (var player in resp.players)
+                        if (!participantUpdate.CancellationPending)
                         {
-                            participants.Add(new Participant(player));
+
+                            foreach (var player in resp.players)
+                            {
+                                participants.Add(new Participant(player));
+                            }
+                            this.participantList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                            {
+                                ParticipantList.ItemsSource = this.participants;
+                                ParticipantList.Items.Refresh(); 
+                            }));
                         }
-                        this.participantList.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate ()
+                        else
                         {
-                            ParticipantList.ItemsSource = this.participants;
-                            ParticipantList.Items.Refresh(); 
-                        }));
+                            e.Cancel = true;
+                            return;
+                        }
                     }
                 }
             }

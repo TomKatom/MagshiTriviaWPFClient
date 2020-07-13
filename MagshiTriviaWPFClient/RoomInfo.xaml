@@ -18,9 +18,9 @@
             <TextBlock HorizontalAlignment="Center" FontSize="28">MagshiTrivia</TextBlock>
         </materialDesign:ColorZone>
 
-        <WrapPanel DockPanel.Dock="Top">
-            <TextBlock Text="Room: " FontSize="20" Margin="8" ></TextBlock>
-            <TextBlock x:Name="NameTxt" FontSize="20" Margin="8"></TextBlock>
+        <WrapPanel DockPanel.Dock="Top" Margin="8">
+            <TextBlock Text="Room: " FontSize="20"></TextBlock>
+            <TextBlock x:Name="NameTxt" FontSize="20"></TextBlock>
         </WrapPanel>
         <Border Padding="50">
             <StackPanel VerticalAlignment="Center">

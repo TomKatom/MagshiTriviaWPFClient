@@ -41,6 +41,7 @@ namespace MagshiTriviaWPFClient
         public void OnClickExit(object sender, RoutedEventArgs e)
         {
             cm.IsOpen = false;
+            this.client.Logout();
             this.Close();
         }
 
@@ -54,6 +55,12 @@ namespace MagshiTriviaWPFClient
         private void OnClickJoinRoom(object sender, RoutedEventArgs e)
         {
             new JoinRoom(client).Show();
+            this.Close();
+        }
+
+        private void OnClickLeaderboard(object sender, RoutedEventArgs e)
+        {
+            new Leaderboard(this.client).Show();
             this.Close();
         }
     }

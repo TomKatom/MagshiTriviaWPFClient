@@ -132,6 +132,13 @@ namespace MagshiTriviaWPFClient
                 }
             }
         }
+
+        private void OnClickBack(object sender, RoutedEventArgs e)
+        {
+            this.roomUpdater.CancelAsync();
+            new MainMenu(this.client).Show();
+            this.Close();
+        }
     }
     public class RoomData
     {

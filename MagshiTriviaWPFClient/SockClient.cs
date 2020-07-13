@@ -106,9 +106,10 @@ namespace MagshiTriviaWPFClient
             }
             receiveDone.Set();
         }
-        public void Register(RegisterRequest request)
+        public ResponseStatus Register(RegisterRequest request)
         {
             this.Send(SerializeRequests.SerializeRegister(request));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
         }
         public ResponseStatus Login(LoginRequest request)
         {
@@ -161,6 +162,36 @@ namespace MagshiTriviaWPFClient
             this.Send(SerializeRequests.SerializeStartGame());
             return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
 
+        }
+        public GetQuestionResponse GetQuestion()
+        {
+            this.Send(SerializeRequests.SerializeGetQuestion());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetQuestionResponse>(this.Receive());
+        }
+        public SubmitAnswerResponse SubmitAnswer(SubmitAnswerRequest request)
+        {
+            this.Send(SerializeRequests.SerializeRequest<SubmitAnswerRequest>(request, RequestCodes.submitAnswerRequest));
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<SubmitAnswerResponse>(this.Receive());
+        }
+        public GetGameResultsResponse GetGameResult()
+        {
+            this.Send(SerializeRequests.SerializeGetGameResults());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetGameResultsResponse>(this.Receive());
+        }
+        public GetLeaderboardResponse GetLeaderboard()
+        {
+            this.Send(SerializeRequests.SerializeGetLeaderboard());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<GetLeaderboardResponse>(this.Receive());
+        }
+        public void Logout()
+        {
+            this.Send(SerializeRequests.SerializeLogout());
+        }
+        public ResponseStatus LeaveGame()
+        {
+            
+            this.Send(SerializeRequests.SerializeLeaveGame());
+            return SerializationAndDeserialization.DeserializeResponses.DeserializeResponse<Response>(this.Receive()).status;
         }
 
     }
